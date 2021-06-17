@@ -10,7 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+import django_heroku
+
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -19,13 +22,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-)ji(-*%h_)fd^nx6_47_6gsjodjfx01-j8m+a3)n+z666f^gb8'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'www.learning-logs-sean-singer.herokuapp.com',
+    'localhost',
+]
 
 
 # Application definition
@@ -34,6 +39,9 @@ INSTALLED_APPS = [
     # My apps
     'learning_logs',
     'users',
+
+    # Third party apps.
+    'bootstrap4',
 
     # Default django apps.
     'django.contrib.admin',
@@ -129,5 +137,8 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# My Settings
+# My settings
 LOGIN_URL = 'users:login'
+
+# Heroku settings
+django_heroku.settings(locals())
